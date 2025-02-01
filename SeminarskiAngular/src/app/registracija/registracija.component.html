@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registracija</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+<section class="registration-section">
+  <div class="registration-card">
+    <h2 class="text-center mb-4">Registracija</h2>
+
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Ime</label>
+        <input type="text" class="form-control" [(ngModel)]="registracija.ime"
+               [ngModelOptions]="{standalone: true}" required #ime="ngModel" [placeholder]="provjeriPolje(ime)">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Prezime</label>
+        <input type="text" class="form-control" [(ngModel)]="registracija.prezime"
+               [ngModelOptions]="{standalone: true}" required #prezime="ngModel" [placeholder]="provjeriPolje(prezime)">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="text" class="form-control" [(ngModel)]="registracija.email"
+               [ngModelOptions]="{standalone: true}" required #email="ngModel" [placeholder]="provjeriPolje(email)">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Korisničko ime</label>
+        <input type="text" class="form-control" [(ngModel)]="registracija.korisnickoIme"
+               [ngModelOptions]="{standalone: true}" required #username="ngModel" [placeholder]="provjeriPolje(username)">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Lozinka</label>
+        <input type="password" class="form-control" [(ngModel)]="registracija.lozinka"
+               [ngModelOptions]="{standalone: true}" required #password="ngModel" [placeholder]="provjeriPolje(password)">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Ponovite lozinku</label>
+        <input type="password" class="form-control" [(ngModel)]="sifra"
+               [ngModelOptions]="{standalone: true}" required #password2="ngModel" [placeholder]="provjeriPolje(password2)">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Adresa stanovanja</label>
+        <input type="text" class="form-control" [(ngModel)]="registracija.adresaStanovanja"
+               [ngModelOptions]="{standalone: true}" required #adresaStanovanja="ngModel" [placeholder]="provjeriPolje(adresaStanovanja)">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Broj telefona</label>
+        <input type="text" class="form-control" [(ngModel)]="registracija.brojTelefona"
+               [ngModelOptions]="{standalone: true}" required #brojTelefona="ngModel" [placeholder]="provjeriPolje(brojTelefona)">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Grad</label>
+        <select class="form-control" [(ngModel)]="registracija.gradId" [ngModelOptions]="{standalone: true}">
+          <option *ngFor="let x of gradovi" [value]="x.id">{{x.opis}}</option>
+        </select>
+      </div>
+
+      <button type="button" class="btn btn-register" (click)="registracijaPodataka()">
+        <i class="bi bi-person-plus-fill"></i> Registruj se
+      </button>
+    </form>
+  </div>
+</section>
+
+</body>
+</html>

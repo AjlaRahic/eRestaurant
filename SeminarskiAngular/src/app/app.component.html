@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food app - aplikacija za naručivanje hrane - admin</title>
+  <link rel="stylesheet" href="app.component.css">
+</head>
+<body>
+<header class="header">
+  <h1>Food app - aplikacija za naručivanje hrane - admin</h1>
+  <h2>Dobrodošli na stranicu za naručivanje hrane {{userName}}</h2>
+  <p>Upravljajte sistemom za naručivanje hrane </p>
+
+
+
+  <nav class="nav">
+    <section class="options">
+
+      <button routerLink="/login">Login</button>
+      <button routerLink="/registracija">Registracija</button>
+      <button routerLink="/meni">Upravljaj ponudom restorana</button>
+      <button routerLink="/korisnici">Upravljaj korisnicima</button>
+      <button routerLink="/skladiste">Upravljaj skladištem</button>
+      <button routerLink="/pregledulaza">Izvjestaji o ulazima</button>
+      <button routerLink="/log">Izvjestaji o log aktivnostima</button>
+      <button routerLink="/chat">Chat</button>
+
+    </section>
+  </nav>
+</header>
+<router-outlet></router-outlet>
+</body>
+</html>

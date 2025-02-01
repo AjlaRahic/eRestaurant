@@ -1,0 +1,34 @@
+<div>
+  <h2>Pregled ulaza robe po periodu</h2>
+
+  <label for="startDate">Početni datum:</label>
+  <input type="date" id="startDate" [(ngModel)]="startDate">
+
+  <label for="endDate">Krajnji datum:</label>
+  <input type="date" id="endDate" [(ngModel)]="endDate">
+
+  <button (click)="fetchPodaci(startDate,endDate)">Prikaži</button>
+<label>            </label>
+  <button (click)="generatePDF()">Generiraj PDF</button>
+
+
+  <table class="table">
+    <tr>
+
+      <th>Datum prijema</th>
+      <th>Ukupna kolicina</th>
+      <th>Ukupna cijena</th>
+
+
+    </tr>
+    <tbody>
+    <tr *ngFor="let s of ulazi">
+      <td>{{s.datum}}</td>
+      <td>{{s.totalKolicina}}</td>
+      <td>{{s.totalCijena}}</td>
+
+
+    </tr></tbody></table>
+</div>
+<canvas id="myChart"></canvas>
+

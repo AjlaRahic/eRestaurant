@@ -1,0 +1,158 @@
+<div class="kategorija-selector">
+  <label for="kategorija">Odaberite kategoriju:</label>
+  <select id="kategorija" [(ngModel)]="odabranaKategorija" (change)="filtrirajPoKategoriji(odabranaKategorija)">
+    <option [value]="null">Sve kategorije</option>
+    <option *ngFor="let kategorija of meniGrupe" [value]="kategorija.naziv">
+      {{ kategorija.naziv }}
+    </option>
+  </select>
+</div>
+
+
+<div class="container my-4">
+  <div class="row">
+    <!-- Iteracija kroz stavke menija -->
+    <div class="col-md-4 mb-4" *ngFor="let s of stavke">
+      <div class="card shadow-sm h-100">
+        <img class="card-img-top" [src]="s.slika" style="height: 150px; object-fit: cover;" alt="Ova stavka nema sliku" />
+        <div class="card-body">
+          <h5 class="card-title text-primary">{{ s.naziv }}</h5>
+          <p class="card-text text-muted">{{ s.opis }}</p>
+          <h6 class="text-danger">{{ s.cijena }} KM</h6>
+          <div *ngIf="s.snizenaCijena" class="text-success">
+            <small>Snižena cijena: {{ s.snizenaCijena}} KM</small>
+          </div>
+          <p class="mt-2"><strong>Kategorija:</strong> {{ getNazivKategorije(s.kategorijaId) }}</p>
+
+          <p><strong>Izdvojeno:</strong> {{ s.izdvojeno ? 'Da' : 'Ne' }}</p>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-between">
+          <button (click)="Obrisi(s.id)" class="btn btn-secondary btn-sm">Obriši</button>
+          <button (click)="editstavka = s" class="btn btn-secondary btn-sm">Uredi</button>
+          <button (click)="otvoriFormuZaSliku(s)" class="btn btn-secondary btn-sm">Dodaj sliku</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal za dodavanje slike -->
+  <div *ngIf="slikastavka" class="modal fade show" tabindex="-1" aria-modal="true" role="dialog" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Dodaj sliku</h5>
+          <button type="button" class="btn-close" (click)="zatvoriFormuZaSliku()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="dodajSliku()">
+            <div class="form-group">
+              <label for="slika">Odaberite sliku</label>
+              <input type="file" id="slika" class="form-control" (change)="onFileSelected($event)" />
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Dodaj</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dugme za dodavanje nove stavke -->
+  <div class="text-center mt-4">
+    <button type="button" class="btn btn-success" (click)="DodajNovu()">Dodaj novu stavku</button>
+  </div>
+
+  <!-- Modal za dodavanje nove stavke -->
+  <div *ngIf="novastavka" class="modal fade show" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Dodaj novu stavku menija</h5>
+          <button type="button" class="btn-close" (click)="novastavka = null" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Forma za dodavanje stavke -->
+          <div class="form-group">
+            <label>Naziv stavke</label>
+            <input [(ngModel)]="novastavka.naziv" placeholder="Naziv" name="Naziv" required class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Opis stavke</label>
+            <textarea [(ngModel)]="novastavka.opis" placeholder="Opis" name="Opis" required class="form-control"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Cijena stavke</label>
+            <input [(ngModel)]="novastavka.cijena" placeholder="Cijena" name="Cijena" required class="form-control" type="number" />
+          </div>
+          <div class="form-group">
+            <label>Izdvojeno</label>
+            <input type="checkbox" [(ngModel)]="novastavka.izdvojeno" name="Izdvojeno" class="form-check-input" />
+          </div>
+          <div class="form-group">
+            <label>Snižena cijena</label>
+            <input [(ngModel)]="novastavka.snizenaCijena" placeholder="Snižena cijena" name="SnizenaCijena" class="form-control" type="number" />
+          </div>
+          <div class="form-group">
+            <label>Kategorija</label>
+            <select class="form-control" [(ngModel)]="novastavka.kategorijaId">
+              <option *ngFor="let k of meniGrupe" [value]="k.id">{{ k.naziv }}</option>
+            </select>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="novastavka = null">Zatvori</button>
+          <button type="button" class="btn btn-primary" (click)="DodajNovuStavku()">Spremi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal za uređivanje stavke -->
+  <div *ngIf="editstavka" class="modal fade show" tabindex="-1" aria-labelledby="editModalLabel" aria-modal="true" role="dialog" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edituj stavku menija</h5>
+          <button type="button" class="btn-close" (click)="editstavka = null" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Naziv stavke</label>
+            <input [(ngModel)]="editstavka.naziv" placeholder="Naziv" name="Naziv" required class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Opis stavke</label>
+            <textarea [(ngModel)]="editstavka.opis" placeholder="Opis" name="Opis" required class="form-control"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Cijena stavke</label>
+            <input [(ngModel)]="editstavka.cijena" placeholder="Cijena" name="Cijena" required class="form-control" type="number" />
+          </div>
+          <div class="form-group">
+            <label>Izdvojeno</label>
+            <input type="checkbox" [(ngModel)]="editstavka.izdvojeno" name="Izdvojeno" class="form-check-input" />
+          </div>
+          <div class="form-group">
+            <label>Snižena cijena</label>
+            <input [(ngModel)]="editstavka.snizenaCijena" placeholder="Snižena cijena" name="SnizenaCijena" class="form-control" type="number" />
+          </div>
+
+          <div class="form-group">
+            <label>Kategorija</label>
+            <select class="form-control" [(ngModel)]="editstavka.kategorijaId">
+              <option *ngFor="let k of meniGrupe" [value]="k.id">{{ k.naziv }}</option>
+            </select>
+          </div>
+
+          <!-- Forma za sliku -->
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="editstavka = null">Zatvori</button>
+          <button type="button" class="btn btn-primary" (click)="EditujStavku()">Spremi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

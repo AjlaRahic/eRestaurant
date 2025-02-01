@@ -1,0 +1,41 @@
+
+  /* Pozadinska slika */
+.registration-section {
+  background: url('https://i.pinimg.com/736x/9d/15/91/9d159106ac6a7ac9d6c49bb829c320e9.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Prozirna kartica sa formom */
+.registration-card {
+  background: rgba(255, 255, 255, 0.9); /* Lagano prozirna pozadina */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Stilizacija dugmeta */
+.btn-register {
+  background-color: #343a40;
+  color: white;
+  width: 100%;
+  padding: 10px;
+}
+
+.btn-register:hover {
+  background-color: #212529;
+}
+
+/* Prilagodba za manje ekrane */
+@media (max-width: 768px) {
+  .registration-card {
+    max-width: 90%;
+    padding: 20px;
+  }
+}
+

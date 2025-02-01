@@ -1,0 +1,133 @@
+<div class="container mt-4">
+  <!-- Filter sekcija -->
+  <div class="filter-section mb-4">
+    <input [(ngModel)]="filter_ime_prezime" type="checkbox" id="filterCheckbox">
+    <label for="filterCheckbox">Filter by <strong>Ime / Prezime</strong></label>
+    <br>
+    <input [(ngModel)]="ime_prezime" (ngModelChange)="FiltrirajAdministratore()"
+           type="text" placeholder="Unesite ime ili prezime"
+           class="form-control mb-2">
+    <button (click)="FiltrirajAdministratore()" class="btn btn-primary">Pretraži</button>
+    <hr>
+  </div>
+
+  <!-- Lista korisnika -->
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let admin of FiltrirajAdministratore()">
+      <div class="card shadow-sm">
+        <!-- Slika profila -->
+        <img class="card-img-top" [src]="admin.slika" style="height: 150px; object-fit: cover;" alt="Ovaj korisnik nema sliku" />
+
+
+        <div class="card-body">
+          <h5 class="card-title text-primary">{{ admin.ime }} {{ admin.prezime }}</h5>
+          <p class="card-text">
+            <strong>Korisničko ime:</strong> {{ admin.korisnickoIme }} <br>
+            <strong>Email:</strong>
+            <a href="mailto:{{ admin.email }}">{{ admin.email }}</a> <br>
+            <strong>Broj telefona:</strong> {{ admin.brojTelefona }} <br>
+            <strong>Adresa:</strong> {{ admin.adresa }}
+          </p>
+          <div class="d-flex justify-content-between">
+            <button (click)="Obrisi(admin.id)" class="btn btn-secondary btn-sm">Obrisi</button>
+            <button (click)="editadmin=admin" class="btn btn-secondary btn-sm">Uredi</button>
+            <button (click)="otvoriFormuZaSliku(admin)" class="btn btn-secondary btn-sm">Dodaj sliku</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dodavanje novog korisnika -->
+  <button routerLink="/registracija/" class="btn btn-success">Novi administrator</button>
+
+  <!-- Poruka ako nema korisnika -->
+  <ng-template #noData>
+    <p class="text-center text-muted">Nema dostupnih administratora.</p>
+  </ng-template>
+
+  <!-- Modal za dodavanje slike -->
+  <div *ngIf="slikaadmin" class="modal fade show" tabindex="-1"
+       aria-modal="true" role="dialog" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Dodaj sliku profila za {{ slikaadmin.ime }} {{ slikaadmin.prezime }}</h5>
+          <button type="button" class="btn-close"
+                  (click)="zatvoriFormuZaSliku()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="dodajSliku()">
+            <div class="form-group">
+              <label for="slika">Odaberite sliku</label>
+              <input type="file" id="slika" class="form-control"
+                     (change)="onFileSelected($event)" />
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Dodaj</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal za uređivanje korisnika -->
+  <div *ngIf="editadmin" class="modal fade show" tabindex="-1"
+       aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Uredi korisnika</h5>
+          <button type="button" class="btn-close"
+                  (click)="editadmin=null" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Ime korisnika</label>
+            <input [(ngModel)]="editadmin.ime"
+                   placeholder="Ime" name="ime" required class="form-control" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label>Prezime korisnika</label>
+            <input [(ngModel)]="editadmin.prezime"
+                   placeholder="Prezime" name="prezime" required class="form-control"  autocomplete="off"/>
+          </div>
+          <div class="form-group">
+            <label>Korisničko ime</label>
+            <input [(ngModel)]="editadmin.korisnickoIme"
+                   placeholder="Korisničko ime" name="korisnickoIme" required class="form-control" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input [(ngModel)]="editadmin.email"
+                   placeholder="Email" name="email" required class="form-control"  autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label>Broj telefona</label>
+            <input [(ngModel)]="editadmin.brojTelefona"
+                   placeholder="Broj telefona" name="brojTelefona" class="form-control"  autocomplete="off"/>
+          </div>
+          <div class="form-group">
+            <label>Adresa</label>
+            <input [(ngModel)]="editadmin.adresa"
+                   placeholder="Adresa" name="adresa" class="form-control"  autocomplete="off" />
+          </div>
+          <div class="form-outline mb-6">
+            <label class="form-label">Grad</label>
+            <select class="form-control" [(ngModel)]="editadmin.gradId"
+                    [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let x of gradovi" [value]="x.id">{{x.opis}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+                  (click)="editadmin=null">Zatvori</button>
+          <button type="button" class="btn btn-primary"
+                  (click)="EditujAdmina()">Spremi izmjene</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

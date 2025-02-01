@@ -1,0 +1,117 @@
+
+
+<table class="table table-light">
+  <tr>
+    <th>Id</th>
+    <th>Naziv</th>
+    <th>Kolicina ulaza</th>
+    <th>Cijena</th>
+    <th>Ime dobavljača</th>
+    <th>Datum prijema</th>
+
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of skladistestavke">
+    <td>{{s.id}}</td>
+    <td>{{s.naziv}}</td>
+    <td>{{s.kolicinaUlaza}}</td>
+    <td>{{s.cijena}}</td>
+    <td>{{s.imeDobavljaca}}</td>
+    <td>{{s.datumPrijema}}</td>
+
+    <td>
+      <button (click)="ObrisiStavku(s.id)">Obrisi</button>
+      <button (click)="editulaz=s">Uredi</button>
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+<button (click)="NoviUlazUSkladiste()" class="form-label">Nova stavka</button>
+
+
+<!-- MODAL DIALOG ZA DODAVANJE STUDENTA -->
+
+<div *ngIf="noviulaz" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Dodaj novu stavku u skladište </h5>
+        <button type="button" class="btn-close" (click)="noviulaz=null" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv stavke</label>
+          <input class="form-control" [(ngModel)]="noviulaz.naziv"  placeholder="Naziv">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Kolicina ulaza</label>
+          <input class="form-control" [(ngModel)]="noviulaz.kolicinaUlaza" placeholder="Kolicina ulaza"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena</label>
+          <input class="form-control" [(ngModel)]="noviulaz.cijena" placeholder="Cijena"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum prijema ulaza</label>
+          <input class="form-control" type="date" [(ngModel)]="noviulaz.datumPrijema" placeholder="Datum prijema"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Ime dobavljaca</label>
+          <input class="form-control" [(ngModel)]="noviulaz.imeDobavljaca" placeholder="Ime dobavljaca"/>
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="noviulaz=null" >Close</button>
+        <button type="button" class="btn btn-primary" (click)="DodajStavku()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="editulaz" class="modal fade show"  tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Edituj  stavku u skladištu </h5>
+        <button type="button" class="btn-close" (click)="editulaz=null" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv stavke</label>
+          <input class="form-control" [(ngModel)]="editulaz.naziv"  placeholder="Naziv">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Kolicina ulaza</label>
+          <input class="form-control" [(ngModel)]="editulaz.kolicinaUlaza" placeholder="Kolicina ulaza"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cijena</label>
+          <input class="form-control" [(ngModel)]="editulaz.cijena" placeholder="Cijena"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Datum prijema ulaza</label>
+          <input class="form-control" type="date" [(ngModel)]="editulaz.datumPrijema" placeholder="Datum prijema"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Ime dobavljaca</label>
+          <input class="form-control" [(ngModel)]="editulaz.imeDobavljaca" placeholder="Ime dobavljaca"/>
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="editulaz=null" >Close</button>
+        <button type="button" class="btn btn-primary" (click)="EditujStavku()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,46 @@
+#myChart {
+  width: 100% !important;   /* Širina grafikona koja se prilagođava veličini roditeljskog elementa */
+  height: 400px;            /* Visina grafikona, možete prilagoditi prema potrebama */
+  max-width: 100%;          /* Maksimalna širina koja osigurava da grafikon ne izlazi izvan ekrana */
+  margin-top: 20px;         /* Razmak od gore */
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #eaeaea;
+}
+
+table th, table td {
+  text-align: center;
+}
+
+.table-warning {
+  background-color: #f4f4f4;
+}
+
+.table-warning th {
+  background-color: #d6d6d6;
+  color: #333;
+}

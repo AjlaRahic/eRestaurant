@@ -1,0 +1,39 @@
+<div class="container">
+  <h2>Pregled aktivnosti</h2>
+
+  <div class="filter">
+    <label for="startDate">Početni datum:</label>
+    <input type="date" id="startDate" [(ngModel)]="startDate" />
+
+    <label for="endDate">Krajnji datum:</label>
+    <input type="date" id="endDate" [(ngModel)]="endDate" />
+
+    <button (click)="fetchLogs(startDate,endDate)">Prikaži</button>
+  </div>
+  <button (click)="showChart()">Prikaži graf</button>
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+  <table class="table table-light" *ngIf="logs.length > 0">
+    <thead>
+    <tr>
+      <th>Datum</th>
+      <th>Broj aktivnosti</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let log of logs">
+      <td>{{ log.vrijeme }}</td>
+      <td>{{ log.brojAktivnosti }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+    <div *ngIf="logs.length > 0 && isChartVisible">
+      <canvas #chartCanvas></canvas>
+    </div>
+
+
+  <p *ngIf="logs.length === 0 && !errorMessage">Nema aktivnosti za zadani period.</p>
+
+  </div>
+
